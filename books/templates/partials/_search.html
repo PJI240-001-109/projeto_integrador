@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<form action="{% url 'index' %}">
+    <div class="search-bar">
+        <label for="search"></label><input
+                type="search"
+                name="search"
+                id="search"
+                placeholder="{% translate 'Search placeholder' %}"
+                value="{{ search_text }}"
+                minlength=3
+        />
+        <button type="submit">{% translate 'Search' %}</button>
+    </div>
+    <p class="text-center">
+        {% translate 'Reserve your book' %}
+        <strong>{% translate 'Library number' %}</strong>
+    </p>
+</form>

@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<div class="result">
+    <div>
+        <h2>{{ book.title_str }}</h2>
+        <p>
+            {% if book.authors.count == 1 %}
+                {% translate 'Author' %}:
+            {% else %}
+                {% translate 'Authors' %}:
+            {% endif %}
+
+            {{ book.authors_str }}
+        </p>
+        <p>
+            {% for info in book.infos %}
+                <small>{{ info }}<br></small>
+            {% endfor %}
+        </p>
+    </div>
+
+{#    {% if book.available %}#}
+{#        <div class="status available"><span>{% translate 'Available' %}</span></div>#}
+{#    {% else %}#}
+{#        <div class="status unavailable"><span>{% translate 'Unavailable' %}</span></div>#}
+{#    {% endif %}#}
+</div>

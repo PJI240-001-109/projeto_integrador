@@ -1,0 +1,21 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% include 'partials/_metadata.html' %}
+    {% include 'partials/_stylesheet.html' %}
+    {% block page_css %}{% endblock %}
+    {% include 'partials/_favicon.html' %}
+
+    <title>{% translate "Page title" %}</title>
+</head>
+<body>
+{% include 'partials/_header.html' %}
+
+{% block content %}{% endblock %}
+
+{% include 'partials/_footer.html' %}
+</body>
+</html>

@@ -1,0 +1,7 @@
+{% load i18n %}
+
+<section class="wrapper">
+    {% for book in books %}
+        {% include 'partials/_search_result_item.html' %}
+    {% endfor %}
+</section>

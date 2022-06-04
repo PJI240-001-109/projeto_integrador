@@ -1,0 +1,14 @@
+.page-container-centered {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 991px) {
+    .page-container-centered {
+        padding: 1rem;
+    }
+}

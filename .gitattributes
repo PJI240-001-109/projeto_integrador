@@ -1,0 +1,4 @@
+*    text=auto
+*.py diff=python
+*.mo bianary
+*.po text

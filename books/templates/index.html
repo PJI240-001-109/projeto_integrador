@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block page_css %}
+    <link rel="stylesheet" href="{% static "css/pages/index.css" %}"/>
+{% endblock %}
+
+{% block content %}
+    {% if books %}
+        {% include 'partials/_search_result.html' %}
+    {% elif search_text %}
+        <div>
+            <h2 class="text-center separator">{% translate 'No book found' %}</h2>
+        </div>
+    {% endif %}
+
+{% endblock %}
