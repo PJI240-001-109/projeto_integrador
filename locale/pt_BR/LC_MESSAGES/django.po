@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-04 15:23-0300\n"
+"POT-Creation-Date: 2022-06-06 20:05-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,198 +18,239 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: books/admin.py:87 books/models.py:241 books/models.py:312
-msgid "Status"
-msgstr "Estado"
+#: books/admin.py:104
+msgid "Book status"
+msgstr "Status do Livro"
 
-#: books/admin.py:93 books/models.py:301
-msgid "Late"
-msgstr "Atrasado"
-
-#: books/admin.py:94 books/models.py:300
+#: books/admin.py:110 books/models.py:329
 msgid "Borrowed"
 msgstr "Emprestado"
 
-#: books/admin.py:95 books/models.py:302
+#: books/admin.py:111 books/models.py:325
 msgid "Returned"
 msgstr "Devolvido"
 
-#: books/admin.py:96 books/models.py:303
-msgid "Returned Late"
-msgstr "Devolvido com atraso"
-
-#: books/admin.py:97
+#: books/admin.py:112 books/admin.py:135
 msgid "All"
 msgstr "Todos"
+
+#: books/admin.py:127
+msgid "Borrow status"
+msgstr "Status do empréstimo"
+
+#: books/admin.py:133 books/models.py:328
+msgid "Late"
+msgstr "Atrasado"
+
+#: books/admin.py:134
+msgid "On time"
+msgstr "Dentro do prazo"
 
 #: books/apps.py:8
 msgid "Library"
 msgstr "Biblioteca"
 
-#: books/forms.py:22 books/models.py:235
+#: books/forms.py:24 books/models.py:233
 msgid "Physical ID"
 msgstr "Tombo"
 
-#: books/models.py:19 books/models.py:52 books/models.py:67 books/models.py:83
+#: books/models.py:17 books/models.py:50 books/models.py:65 books/models.py:81
+#: books/models.py:284
 msgid "Name"
 msgstr "Nome"
 
-#: books/models.py:22 books/models.py:141 books/models.py:255
+#: books/models.py:20 books/models.py:139 books/models.py:255
 msgid "Publisher"
 msgstr "Editora"
 
-#: books/models.py:23
+#: books/models.py:21
 msgid "Publishers"
 msgstr "Editoras"
 
-#: books/models.py:35
+#: books/models.py:33
 msgid "DDC"
 msgstr "CDD"
 
-#: books/models.py:37
+#: books/models.py:35
 msgid "Description"
 msgstr "Descrição"
 
-#: books/models.py:40 books/models.py:238
+#: books/models.py:38 books/models.py:237
 msgid "Subject"
 msgstr "Assunto"
 
-#: books/models.py:41
+#: books/models.py:39
 msgid "Subjects"
 msgstr "Assuntos"
 
-#: books/models.py:55 books/models.py:188
+#: books/models.py:53 books/models.py:186
 msgid "Translator"
 msgstr "Tradutor(a)"
 
-#: books/models.py:56 books/models.py:131 books/models.py:169
+#: books/models.py:54 books/models.py:129 books/models.py:167
 msgid "Translators"
 msgstr "Tradutores(as)"
 
-#: books/models.py:71 books/models.py:133 books/models.py:259
+#: books/models.py:69 books/models.py:131 books/models.py:259
 msgid "Collection"
 msgstr "Coleção"
 
-#: books/models.py:72
+#: books/models.py:70
 msgid "Collections"
 msgstr "Coleções"
 
-#: books/models.py:85
+#: books/models.py:83
 msgid "Year of birth"
 msgstr "Ano de nascimento"
 
-#: books/models.py:87
+#: books/models.py:85
 msgid "Year of death"
 msgstr "Ano de morte"
 
-#: books/models.py:89 books/models.py:146
+#: books/models.py:87 books/models.py:144
 msgid "PHA"
 msgstr "PHA"
 
-#: books/models.py:91
+#: books/models.py:89
 msgid "PHA Label"
 msgstr "PHA Etiqueta"
 
-#: books/models.py:93
+#: books/models.py:91 books/models.py:289 books/models.py:316
 msgid "Observation"
 msgstr "Observações"
 
-#: books/models.py:96 books/templates/partials/_search_result_item.html:8
+#: books/models.py:94 books/templates/partials/_search_result_item.html:8
 msgid "Author"
 msgstr "Autor(a)"
 
-#: books/models.py:97 books/models.py:129 books/models.py:165
+#: books/models.py:95 books/models.py:127 books/models.py:163
 #: books/models.py:251 books/templates/partials/_search_result_item.html:10
 msgid "Authors"
 msgstr "Autores(as)"
 
-#: books/models.py:119
+#: books/models.py:117
 msgid "Circulant"
 msgstr "Circulante"
 
-#: books/models.py:120
+#: books/models.py:118
 msgid "Archived"
 msgstr "Arquivo morto"
 
-#: books/models.py:121
+#: books/models.py:119
 msgid "Downed / Lost by user"
 msgstr "Baixado / Perdido pelo usuário"
 
-#: books/models.py:122
+#: books/models.py:120
 msgid "Downed / Defective book"
 msgstr "Baixado / Livro com defeito"
 
-#: books/models.py:123
+#: books/models.py:121
 msgid "Not circulant"
 msgstr "Não circulante"
 
-#: books/models.py:127
+#: books/models.py:125
 msgid "ISBN"
 msgstr "ISBN"
 
-#: books/models.py:128 books/models.py:152 books/models.py:247
+#: books/models.py:126 books/models.py:150 books/models.py:247
 msgid "Title"
 msgstr "Título"
 
-#: books/models.py:135
+#: books/models.py:133
 msgid "Volume"
 msgstr "Volume"
 
-#: books/models.py:137
+#: books/models.py:135
 msgid "Edition"
 msgstr "Edição"
 
-#: books/models.py:139
+#: books/models.py:137
 msgid "Local"
 msgstr "Local"
 
-#: books/models.py:142
+#: books/models.py:140
 msgid "Year"
 msgstr "Ano"
 
-#: books/models.py:144
+#: books/models.py:142
 msgid "Page count"
 msgstr "Número de páginas"
 
-#: books/models.py:149 books/models.py:236
+#: books/models.py:147 books/models.py:235 books/models.py:306
 msgid "Book"
 msgstr "Livro"
 
-#: books/models.py:150
+#: books/models.py:148
 msgid "Books"
 msgstr "Livros"
 
-#: books/models.py:240
+#: books/models.py:239
 msgid "Observations"
 msgstr "Observações"
 
+#: books/models.py:241 books/models.py:318
+msgid "Status"
+msgstr "Estado"
+
 #: books/models.py:244
-#, fuzzy
-#| msgid "Physical ID"
 msgid "Physical Book"
 msgstr "Livro físico"
 
 #: books/models.py:245
-#, fuzzy
-#| msgid "Physical ID"
 msgid "Physical Books"
 msgstr "Livros físicos"
 
+#: books/models.py:285
+msgid "Document"
+msgstr "Documento"
+
 #: books/models.py:286
+msgid "Contact"
+msgstr "Contato"
+
+#: books/models.py:288
+msgid "Birthday"
+msgstr "Data de aniversário"
+
+#: books/models.py:292 books/models.py:308
 msgid "Reader"
 msgstr "Leitor(a)"
 
-#: books/models.py:287
+#: books/models.py:293
 msgid "Readers"
 msgstr "Leitores(as)"
 
-#: books/models.py:326
-msgid "Borrow"
-msgstr "Emprestado"
+#: books/models.py:310
+msgid "Date borrow"
+msgstr "Data de empréstimo"
 
-#: books/models.py:327
+#: books/models.py:312
+msgid "Date return"
+msgstr "Data de devolução"
+
+#: books/models.py:314
+msgid "Renew count"
+msgstr "Número de renovações"
+
+#: books/models.py:324
+msgid "Returned late"
+msgstr "Devolvido com atraso"
+
+#: books/models.py:332
+msgid "Borrow"
+msgstr "Empréstimo"
+
+#: books/models.py:333
 msgid "Borrows"
-msgstr "Emprestados"
+msgstr "Empréstimos"
+
+#: books/models.py:340
+msgid "This book is already borrowed"
+msgstr "Este livro já está emprestado"
+
+#: books/models.py:344
+msgid "Return date cannot be before borrow date"
+msgstr "A data de devolução não pode ser anterior a data de empréstimo"
 
 #: books/templates/admin/base_site.html:4
 #: books/templates/admin/base_site.html:12 books/templates/base.html:12

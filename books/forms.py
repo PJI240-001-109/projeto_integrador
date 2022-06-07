@@ -1,8 +1,7 @@
 from django import forms
 from django.utils.translation import gettext as _
 
-from books.models import Book, Borrow, PhysicalBook
-from isbn_field import ISBNField
+from books.models import Book, PhysicalBook
 
 
 class BookForm(forms.ModelForm):

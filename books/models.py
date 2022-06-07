@@ -1,12 +1,10 @@
-from enum import Enum
-from datetime import date
-import re
-from this import d
-import django
+from datetime import timedelta
 
 from django.contrib import admin
 from django.db import models
-from django.db.models import Q, QuerySet, Max
+from django.db.models import Max, Q, QuerySet
+from django.forms import ValidationError
+from django.utils.timezone import now as _now_
 from django.utils.translation import ugettext_lazy as _
 from isbn_field import ISBNField
 
@@ -233,12 +231,14 @@ class Book(models.Model):
 class PhysicalBook(models.Model):
     physical_id = models.PositiveIntegerField(
         unique=True, verbose_name=_('Physical ID'))
-    book = models.ForeignKey(Book, on_delete=models.PROTECT,null=False, verbose_name=_('Book'))
+    book = models.ForeignKey(
+        Book, on_delete=models.PROTECT, null=False, verbose_name=_('Book'))
     shelf = models.ForeignKey(
         Shelf, on_delete=models.PROTECT, blank=True, null=True, verbose_name=_('Subject'))
     observations = models.TextField(
         max_length=2048, blank=True, null=True, verbose_name=_('Observations'))
-    status = models.CharField(max_length=255, choices=BookStatus.choices, verbose_name=_('Status'), default=BookStatus.circulant)
+    status = models.CharField(max_length=255, choices=BookStatus.choices, verbose_name=_(
+        'Status'), default=BookStatus.circulant)
 
     class Meta:
         verbose_name = _('Physical Book')
@@ -276,11 +276,17 @@ class PhysicalBook(models.Model):
             'physical_id__max']
         return max_id + 1 if max_id else 1
 
+    def __str__(self):
+        return "{physical_id} | {title} | {authors}".format(physical_id=self.physical_id, title=self.book_title_str(), authors=self.book_authors_str())
+
+
 class Reader(models.Model):
-    name = models.CharField(max_length=255, )
-    document = models.CharField(max_length=255, )
-    contact = models.CharField(max_length=255, )
-    observation = models.TextField()
+    name = models.CharField(max_length=255, verbose_name=_('Name'))
+    document = models.CharField(max_length=255, verbose_name=_('Document'))
+    contact = models.CharField(max_length=255, verbose_name=_('Contact'))
+    birthday = models.DateField(
+        blank=True, null=True, verbose_name=_('Birthday'))
+    observation = models.TextField(blank=True, verbose_name=_('Observation'))
 
     class Meta:
         verbose_name = _('Reader')
@@ -295,33 +301,48 @@ class Reader(models.Model):
         return ' | '.join(data)
 
 
-
-class BorrowStatus(models.TextChoices):
-    borrowed = 'borrowed', _('Borrowed')
-    late = 'late', _('Late')
-    returned = 'returned', _('Returned')
-    returned_late = 'returned_late', _('Returned Late')
-
-
 class Borrow(models.Model):
-    books = models.ManyToManyField(Book)
-    reader = models.ForeignKey(Reader, on_delete=models.PROTECT)
-    date_borrow = models.DateField(default=django.utils.timezone.now)
-    date_return = models.DateField(blank=True)
-    observation = models.TextField(blank=True)
-    status = models.CharField(max_length=255, choices=BorrowStatus.choices, verbose_name=_('Status'), default=BorrowStatus.borrowed)
+    book = models.ForeignKey(
+        PhysicalBook, on_delete=models.PROTECT, verbose_name=_('Book'))
+    reader = models.ForeignKey(
+        Reader, on_delete=models.PROTECT, verbose_name=_('Reader'))
+    date_borrow = models.DateField(
+        default=_now_, verbose_name=_('Date borrow'))
+    date_return = models.DateField(blank=True, null=True, verbose_name=_(
+        'Date return'))
+    renew_count = models.PositiveIntegerField(
+        verbose_name=_('Renew count'), default=0)
+    observation = models.TextField(
+        blank=True, null=True, verbose_name=_('Observation'))
 
-    # def status(self):
-    #     if self.date_return:
-    #         if abs((self.date_return - self.date_return).days) > 14:
-    #             return BorrowStatus.returned_late
-    #         else:
-    #             return BorrowStatus.returned
-    #     elif abs((date.today - self.date_borrow).days) > 14:
-    #         return BorrowStatus.returned_late
-    #     else:
-    #         return BorrowStatus.borrowed
+    @admin.display(description=_('Status'))
+    def status_str(self):
+        date_limit = self.date_borrow + timedelta(weeks=1 + self.renew_count)
+
+        if self.date_return:
+            if self.date_return > date_limit:
+                return _('Returned late')
+            return _('Returned')
+
+        if _now_().date() > date_limit:
+            return _('Late')
+        return _('Borrowed')
 
     class Meta:
         verbose_name = _('Borrow')
-        verbose_name_plural = _('Borrows') # todo ????
+        verbose_name_plural = _('Borrows')
+
+    def clean(self) -> None:
+        super().clean()
+
+        errors = {}
+
+        if self.book_id and Borrow.objects.filter(~Q(id=self.id), book=self.book, date_return__isnull=True).exists():
+            errors['book'] = _('This book is already borrowed')
+
+        if self.date_return and self.date_return < self.date_borrow:
+            errors['date_return'] = _(
+                'Return date cannot be before borrow date')
+
+        if errors:
+            raise ValidationError(errors)

@@ -1,12 +1,29 @@
+from datetime import timedelta
+
+from django.contrib.admin import SimpleListFilter
+from django.db.models import F
+from django.db.models.functions import Coalesce
+from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+
 from .forms import BookForm, PhysicalBookForm
 from .models import *
-
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.admin import SimpleListFilter
 
 
 class DefaultModelAdmin(admin.ModelAdmin):
     list_per_page = 100
+
+
+class DefaultListFilter(SimpleListFilter):
+    def choices(self, cl):
+        for lookup, title in self.lookup_choices:
+            yield {
+                'selected': self.value() == lookup,
+                'query_string': cl.get_query_string({
+                    self.parameter_name: lookup,
+                }, []),
+                'display': title,
+            }
 
 
 class PublisherAdmin(DefaultModelAdmin):
@@ -83,42 +100,65 @@ class ReaderAdmin(DefaultModelAdmin):
     ordering = ('name',)
 
 
-class BorrowStatusFilter(SimpleListFilter):
-    title = _('Status')
+class BorrowStatusFilter(DefaultListFilter):
+    title = _('Book status')
 
     parameter_name = 'status'
 
     def lookups(self, request, model_admin):
         return (
-            ('late', _('Late')),
             ('borrowed', _('Borrowed')),
             ('returned', _('Returned')),
-            ('returned_late', _('Returned Late')),
             (None, _('All')),
         )
 
-    def choices(self, cl):
-        for lookup, title in self.lookup_choices:
-            yield {
-                'selected': self.value() == lookup,
-                'query_string': cl.get_query_string({
-                    self.parameter_name: lookup,
-                }, []),
-                'display': title,
-            }
+    def queryset(self, request, queryset):
+        if self.value():
+            if self.value() == 'borrowed':
+                return queryset.filter(date_return__isnull=True)
+
+            if self.value() == 'returned':
+                return queryset.filter(date_return__isnull=False)
+
+        return queryset
+
+
+class BorrowLateFilter(DefaultListFilter):
+    title = _('Borrow status')
+
+    parameter_name = 'late'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('late', _('Late')),
+            ('on_time', _('On time')),
+            (None, _('All')),
+        )
 
     def queryset(self, request, queryset):
         if self.value():
-            return queryset.filter(status=self.value())
+            date_limit = F('date_borrow') + \
+                (timedelta(weeks=1) * (F('renew_count') + 1))
+            queryset = queryset.annotate(on_date_limit=Coalesce(
+                'date_return', timezone.now().date()))
+
+            if self.value() == 'late':
+                return queryset.filter(on_date_limit__gt=date_limit)
+
+            if self.value() == 'on_time':
+                return queryset.filter(on_date_limit__lte=date_limit)
 
         return queryset
 
 
 class BorrowAdmin(DefaultModelAdmin):
-    autocomplete_fields = ('books', 'reader')
-    search_fields = ('books__title', 'reader__name', 'reader__document',)
+    list_display = ('status_str', 'reader', 'book', 'date_borrow',
+                    'renew_count', 'date_return')
+    autocomplete_fields = ('book', 'reader')
+    search_fields = ('book__book__title', 'reader__name',
+                     'reader__document', 'reader__contact',)
     ordering = ('date_borrow',)
-    list_filter = (BorrowStatusFilter,)
+    list_filter = (BorrowStatusFilter, BorrowLateFilter)
 
 
 admin.site.register(Publisher, PublisherAdmin)
