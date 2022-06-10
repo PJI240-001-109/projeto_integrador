@@ -341,3 +341,9 @@ class Borrow(models.Model):
 
         if errors:
             raise ValidationError(errors)
+
+    def __str__(self) -> str:
+        date_borrow = self.date_borrow.strftime('%d/%m/%y')
+        date_return = self.date_return.strftime('%d/%m/%y') if self.date_return else '?'
+
+        return '{} | {} - {} | {}'.format(self.book.book, date_borrow, date_return, self.status_str())
