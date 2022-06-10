@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.db import models
 from django.db.models import Max, Q, QuerySet
 from django.forms import ValidationError
-from django.utils.timezone import now as _now_
+from django.utils.timezone import datetime
 from django.utils.translation import ugettext_lazy as _
 from isbn_field import ISBNField
 
@@ -302,7 +302,7 @@ class Borrow(models.Model):
     reader = models.ForeignKey(
         Reader, on_delete=models.PROTECT, verbose_name=_('Reader'))
     date_borrow = models.DateField(
-        default=_now_, verbose_name=_('Date borrow'))
+        default=datetime.today, verbose_name=_('Date borrow'))
     date_return = models.DateField(blank=True, null=True, verbose_name=_(
         'Date return'))
     renew_count = models.PositiveIntegerField(
@@ -319,7 +319,7 @@ class Borrow(models.Model):
                 return _('Returned late')
             return _('Returned')
 
-        if _now_().date() > date_limit:
+        if datetime.today().date() > date_limit:
             return _('Late')
         return _('Borrowed')
 
