@@ -12,6 +12,7 @@ from .models import *
 
 class DefaultModelAdmin(admin.ModelAdmin):
     list_per_page = 100
+    actions = None
 
 
 class DefaultListFilter(SimpleListFilter):

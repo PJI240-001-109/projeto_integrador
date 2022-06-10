@@ -282,8 +282,8 @@ class PhysicalBook(models.Model):
 
 class Reader(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
-    document = models.CharField(max_length=255, verbose_name=_('Document'))
-    contact = models.CharField(max_length=255, verbose_name=_('Contact'))
+    document = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Document'))
+    contact = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Contact'))
     birthday = models.DateField(
         blank=True, null=True, verbose_name=_('Birthday'))
     observation = models.TextField(blank=True, verbose_name=_('Observation'))
@@ -293,12 +293,7 @@ class Reader(models.Model):
         verbose_name_plural = _('Readers')
 
     def __str__(self) -> str:
-        data = [self.name]
-
-        if self.document:
-            data.append(self.document)
-
-        return ' | '.join(data)
+        return '{} | {}'.format(self.id, self.name)
 
 
 class Borrow(models.Model):
