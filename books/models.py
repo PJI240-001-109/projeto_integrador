@@ -239,6 +239,8 @@ class PhysicalBook(models.Model):
         max_length=2048, blank=True, null=True, verbose_name=_('Observations'))
     status = models.CharField(max_length=255, choices=BookStatus.choices, verbose_name=_(
         'Status'), default=BookStatus.circulant)
+    date_register = models.DateField(
+        default=datetime.today, verbose_name=_('Date Register'))
 
     class Meta:
         verbose_name = _('Physical Book')
@@ -294,6 +296,8 @@ class Reader(models.Model):
     birthday = models.DateField(
         blank=True, null=True, verbose_name=_('Birthday'))
     observation = models.TextField(blank=True, verbose_name=_('Observation'))
+    date_register = models.DateField(
+        default=datetime.today, verbose_name=_('Date Register'))
 
     class Meta:
         verbose_name = _('Reader')
@@ -310,6 +314,8 @@ class Borrow(models.Model):
         Reader, on_delete=models.PROTECT, verbose_name=_('Reader'))
     date_borrow = models.DateField(
         default=datetime.today, verbose_name=_('Date borrow'))
+    expected_return = models.DateField(
+        blank=True, null=True, verbose_name=_('Expected return'))
     date_return = models.DateField(blank=True, null=True, verbose_name=_(
         'Date return'))
     renew_count = models.PositiveIntegerField(

@@ -1,7 +1,8 @@
+from datetime import datetime, timedelta
 from django import forms
 from django.utils.translation import gettext as _
 
-from books.models import Book, PhysicalBook
+from books.models import Book, Borrow, PhysicalBook
 
 
 class BookForm(forms.ModelForm):
@@ -22,4 +23,15 @@ class PhysicalBookForm(forms.ModelForm):
 
     class Meta:
         model = PhysicalBook
+        fields = '__all__'
+
+
+class BorrowForm(forms.ModelForm):
+    expected_return = forms.DateField(
+        label=_('Expected return'),
+        initial=(datetime.today() + timedelta(weeks=1)).date()
+    )
+
+    class Meta:
+        model = Borrow
         fields = '__all__'

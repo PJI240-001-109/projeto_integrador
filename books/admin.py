@@ -6,7 +6,7 @@ from django.db.models.functions import Coalesce
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from .forms import BookForm, PhysicalBookForm
+from .forms import BookForm, BorrowForm, PhysicalBookForm
 from .models import *
 
 
@@ -94,11 +94,13 @@ class PhysicalBookAdmin(DefaultModelAdmin):
     )
     autocomplete_fields = ('book', 'shelf',)
     list_filter = ('status',)
+    readonly_fields = ('date_register',)
 
 
 class ReaderAdmin(DefaultModelAdmin):
     search_fields = ('name', 'document', 'contact')
     ordering = ('name',)
+    readonly_fields = ('date_register',)
 
 
 class BorrowStatusFilter(DefaultListFilter):
@@ -170,4 +172,4 @@ admin.site.register(Author, AuthorAdmin)
 admin.site.register(Book, BookAdmin, form=BookForm)
 admin.site.register(PhysicalBook, PhysicalBookAdmin, form=PhysicalBookForm)
 admin.site.register(Reader, ReaderAdmin)
-admin.site.register(Borrow, BorrowAdmin)
+admin.site.register(Borrow, BorrowAdmin, form=BorrowForm)
