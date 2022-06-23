@@ -282,8 +282,15 @@ class PhysicalBook(models.Model):
 
 class Reader(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
-    document = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Document'))
-    contact = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Contact'))
+    document = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name=_('Document'))
+    landline_number_1 = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name=_('Landline number 1'))
+    landline_number_2 = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name=_('Landline number 2'))
+    cellphone = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name=_('Cellphone number'))
+    email = models.EmailField(blank=True, null=True,)
     birthday = models.DateField(
         blank=True, null=True, verbose_name=_('Birthday'))
     observation = models.TextField(blank=True, verbose_name=_('Observation'))
@@ -344,6 +351,7 @@ class Borrow(models.Model):
 
     def __str__(self) -> str:
         date_borrow = self.date_borrow.strftime('%d/%m/%y')
-        date_return = self.date_return.strftime('%d/%m/%y') if self.date_return else '?'
+        date_return = self.date_return.strftime(
+            '%d/%m/%y') if self.date_return else '?'
 
         return '{} | {} - {} | {}'.format(self.book.book, date_borrow, date_return, self.status_str())
