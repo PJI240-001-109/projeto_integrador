@@ -3,5 +3,6 @@ djangorestframework~=3.13.1
 django-isbn-field~=0.5.2
 django-environ~=0.8.1
 
+Faker
 gunicorn
 django-heroku
