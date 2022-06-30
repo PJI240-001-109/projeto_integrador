@@ -47,7 +47,7 @@ class Command(BaseCommand):
     base_dir = Path(settings.BASE_DIR, 'books/management/commands')
 
     def handle(self, *args, **options):
-        fake = Faker()
+        fake = Faker('pt_BR')
         fake.add_provider(profile)
         fake.add_provider(isbn)
         fake.add_provider(phone_number)
@@ -60,7 +60,10 @@ class Command(BaseCommand):
             Reader(
                 name=p['name'],
                 document=p['ssn'],
-                contact=fake.phone_number(),
+                landline_number_1=fake.phone_number(),
+                landline_number_2=fake.phone_number(),
+                cellphone=fake.phone_number(),
+                email=p['mail'],
                 birthday=p['birthdate'],
             ).save()
 

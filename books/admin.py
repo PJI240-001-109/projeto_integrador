@@ -98,7 +98,8 @@ class PhysicalBookAdmin(DefaultModelAdmin):
 
 
 class ReaderAdmin(DefaultModelAdmin):
-    search_fields = ('name', 'document', 'contact')
+    search_fields = ('name', 'document', 'landline_number_1',
+                     'landline_number_2', 'cellphone')
     ordering = ('name',)
     readonly_fields = ('date_register',)
 
@@ -159,7 +160,7 @@ class BorrowAdmin(DefaultModelAdmin):
                     'renew_count', 'date_return')
     autocomplete_fields = ('book', 'reader')
     search_fields = ('book__book__title', 'reader__name',
-                     'reader__document', 'reader__contact',)
+                     'reader__document', 'reader__landline_number_1', 'reader__landline_number_2', 'reader__cellphone')
     ordering = ('date_borrow',)
     list_filter = (BorrowStatusFilter, BorrowLateFilter)
 
