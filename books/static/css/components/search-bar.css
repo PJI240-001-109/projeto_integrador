@@ -6,21 +6,24 @@
 
     margin: 0 auto 1.5rem;
 
-    border: 1px solid #707070;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     overflow: hidden;
 }
 
 .search-bar input {
+    background-color: var(--bg-dropdown);
+    color: var(--text);
+
     flex: 1;
 
     border-width: 0;
 }
 
 .search-bar button {
-    background-color: var(--gray);
-    border-width: 0;
+    background-color: #12181b;
     color: #fff;
+    border-width: 0;
 
     font-weight: 700;
     font-size: 1rem;

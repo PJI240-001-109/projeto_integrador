@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-26 19:44-0300\n"
+"POT-Creation-Date: 2022-06-29 22:42-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,31 +18,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: books/admin.py:107
+#: books/admin.py:108
 msgid "Book status"
 msgstr "Status do Livro"
 
-#: books/admin.py:113 books/models.py:337
+#: books/admin.py:114 books/models.py:337
 msgid "Borrowed"
 msgstr "Emprestado"
 
-#: books/admin.py:114 books/models.py:333
+#: books/admin.py:115 books/models.py:333
 msgid "Returned"
 msgstr "Devolvido"
 
-#: books/admin.py:115 books/admin.py:138
+#: books/admin.py:116 books/admin.py:139
 msgid "All"
 msgstr "Todos"
 
-#: books/admin.py:130
+#: books/admin.py:131
 msgid "Borrow status"
 msgstr "Status do empréstimo"
 
-#: books/admin.py:136 books/models.py:336
+#: books/admin.py:137 books/models.py:336
 msgid "Late"
 msgstr "Atrasado"
 
-#: books/admin.py:137
+#: books/admin.py:138
 msgid "On time"
 msgstr "Dentro do prazo"
 
@@ -54,7 +54,7 @@ msgstr "Biblioteca"
 msgid "Physical ID"
 msgstr "Tombo"
 
-#: books/forms.py:30 books/models.py:318
+#: books/forms.py:31 books/models.py:318
 msgid "Expected return"
 msgstr "Previsão de devolução"
 
@@ -269,8 +269,8 @@ msgid "Return date cannot be before borrow date"
 msgstr "A data de devolução não pode ser anterior a data de empréstimo"
 
 #: books/templates/admin/base_site.html:4
-#: books/templates/admin/base_site.html:12 books/templates/base.html:12
-#: books/templates/partials/_header.html:8
+#: books/templates/admin/base_site.html:12 books/templates/base.html:14
+#: books/templates/partials/_header.html:5
 msgid "Page title"
 msgstr "Biblioteca"
 
@@ -278,7 +278,15 @@ msgstr "Biblioteca"
 msgid "No book found"
 msgstr "Nenhum livro encontrado"
 
-#: books/templates/partials/_header.html:5
+#: books/templates/partials/_nav.html:6
+msgid "Light theme"
+msgstr "Tema claro"
+
+#: books/templates/partials/_nav.html:9
+msgid "Dark theme"
+msgstr "Tema escuro"
+
+#: books/templates/partials/_nav.html:12
 msgid "Administrative area"
 msgstr "Área administrativa"
 

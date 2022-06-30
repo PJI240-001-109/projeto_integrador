@@ -9,9 +9,13 @@
     {% block page_css %}{% endblock %}
     {% include 'partials/_favicon.html' %}
 
+    <script defer src="{% static "js/accessibility.js" %}"></script>
+
     <title>{% translate "Page title" %}</title>
 </head>
-<body>
+<body class="light">
+{% include 'partials/_nav.html' %}
+
 {% include 'partials/_header.html' %}
 
 {% block content %}{% endblock %}
